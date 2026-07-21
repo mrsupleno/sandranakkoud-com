@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandra Nakkoud - Terapeuta Especialista em Ansiedade</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --gold: #D4AF37;
+            --black: #000000;
+            --dark-gray: #1a1a1a;
+            --light-gray: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .gold-text {
+            color: var(--gold);
+        }
+        
+        .gold-bg {
+            background-color: var(--gold);
+        }
+        
+        .black-bg {
+            background-color: var(--black);
+        }
+        
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .symptom-card {
+            position: relative;
+            height: 280px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .symptom-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .symptom-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .symptom-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+            padding: 1rem;
+            color: white;
+        }
+        
+        .symptom-overlay h3 {
+            font-size: 1rem;
+            line-height: 1.1;
+            word-break: keep-all;
+        }
+        
+        .symptom-overlay p {
+            font-size: 0.7rem;
+            line-height: 1.2;
+        }
+        
+        @media (min-width: 768px) {
+            .symptom-overlay {
+                padding: 1.5rem;
+            }
+            .symptom-overlay h3 {
+                font-size: 1.5rem;
+                line-height: 1.2;
+            }
+            .symptom-overlay p {
+                font-size: 0.875rem;
+            }
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid var(--gold);
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: left;
+            font-size: 1rem;
+            color: var(--black);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: #4a4a4a;
+            line-height: 1.7;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-bottom: 1.5rem;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        .faq-icon {
+            color: var(--gold);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .price-old {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+        
+        .step-box {
+            background: white;
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 2rem;
+            position: relative;
+        }
+        
+        .step-letter {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--gold);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--gold);
+        }
+        
+        .testimonial-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--gold);
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes shine {
+            0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(212, 175, 55, 0.8); }
+        }
+        
+        .shine-animation {
+            animation: shine 2s infinite;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <nav class="fixed top-0 w-full z-50 shadow-lg" style="background-color: #484031;">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <img src="logo-icon.png" alt="Logo Sandra Nakkoud" class="h-12 w-12 object-contain flex-shrink-0">
+                <h1 class="serif text-2xl md:text-3xl font-bold gold-text whitespace-nowrap">Sandra Nakkoud</h1>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#inicio" class="text-gray-300 hover:text-[#D4AF37] transition font-medium">Início</a>
+                <a href="#metodo" class="text-gray-300 hover:text-[#D4AF37] transition font-medium">Método</a>
+                <a href="#sobre" class="text-gray-300 hover:text-[#D4AF37] transition font-medium">Sobre</a>
+                <a href="#depoimentos" class="text-gray-300 hover:text-[#D4AF37] transition font-medium">Depoimentos</a>
+                <a href="#agendar" class="gold-bg text-black px-6 py-2.5 rounded-full font-semibold hover:opacity-90 transition">
+                    Agendar Sessão
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="inicio" class="relative min-h-screen flex items-center justify-center px-6 pt-28 pb-16 black-bg">
+        <div class="max-w-6xl mx-auto text-center text-white">
+            <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-5 py-2.5 rounded-full mb-8">
+                <i class="fas fa-shield-alt gold-text"></i>
+                <span class="font-semibold">Atendimento 100% Online e Seguro</span>
+            </div>
+            
+            <h1 class="serif text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                Aprenda a Superar<br>
+                <span class="gold-text">a Ansiedade</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl mb-10 text-gray-300 max-w-3xl mx-auto">
+                Método comprovado para tratar os sintomas da ansiedade desde a primeira sessão
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+                <a href="#agendar" class="gold-bg text-black px-8 py-4 md:px-12 md:py-5 rounded-full font-bold text-base md:text-lg hover:opacity-90 transition shine-animation inline-flex items-center justify-center gap-3">
+                    Agendar Minha Sessão
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="https://wa.me/5527981125528?text=Olá!%20Tenho%20dúvidas" 
+                   target="_blank"
+                   class="border-2 border-[#D4AF37] text-[#D4AF37] px-8 py-4 md:px-10 md:py-5 rounded-full font-bold text-base md:text-lg hover:bg-[#D4AF37]/10 transition inline-flex items-center justify-center gap-3">
+                    <i class="fab fa-whatsapp"></i>
+                    WhatsApp
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-3xl mx-auto">
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-bold gold-text mb-2">5.000+</div>
+                    <div class="text-gray-400 text-sm md:text-base">Horas de Atendimento</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-bold gold-text mb-2">90%</div>
+                    <div class="text-gray-400 text-sm md:text-base">Taxa de Sucesso</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl md:text-5xl font-bold gold-text mb-2">100%</div>
+                    <div class="text-gray-400 text-sm md:text-base">Avaliações 5★</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Você está perdida? -->
+    <section class="py-20 px-6" style="background: var(--light-gray);">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="serif text-3xl md:text-5xl font-bold mb-4 text-black">
+                Você está perdida?
+            </h2>
+            <p class="text-2xl text-gray-700 mb-6">
+                Eu entendo você e posso ajudar!
+            </p>
+            
+            <p class="text-lg font-semibold gold-text mb-12 uppercase tracking-wider">
+                EU SEI O QUE VOCÊ TEM PASSADO...
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="symptom-card card-hover">
+                    <img src="Medo_SandraNakkoud.jpg" alt="Medo">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">MEDO</h3>
+                        <p class="text-sm">constante insegurança</p>
+                    </div>
+                </div>
+                
+                <div class="symptom-card card-hover">
+                    <img src="Rigida_SandraNakkoud.jpg" alt="Inflexível">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">INFLEXÍVEL</h3>
+                        <p class="text-sm">rigidez com todos em volta</p>
+                    </div>
+                </div>
+                
+                <div class="symptom-card card-hover">
+                    <img src="Palpitacao_SandraNakkoud.jpg" alt="Palpitação">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">PALPITAÇÃO</h3>
+                        <p class="text-sm">coração tremendo</p>
+                    </div>
+                </div>
+                
+                <div class="symptom-card card-hover">
+                    <img src="Compusao_SandraNakkoud.jpg" alt="Compulsão">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">COMPULSÃO</h3>
+                        <p class="text-sm">ficar com fome toda hora</p>
+                    </div>
+                </div>
+                
+                <div class="symptom-card card-hover">
+                    <img src="Angustia_SandraNakkoud.jpg" alt="Angústia">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">ANGÚSTIA</h3>
+                        <p class="text-sm">coração apertado</p>
+                    </div>
+                </div>
+                
+                <div class="symptom-card card-hover">
+                    <img src="Raiva_SandraNakkoud.jpg" alt="Raiva">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">RAIVA</h3>
+                        <p class="text-sm">descontar em quem está perto</p>
+                    </div>
+                </div>
+                
+                <div class="symptom-card card-hover">
+                    <img src="Posterga_SandraNakkoud.jpg" alt="Postergação">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">POSTERGAÇÃO</h3>
+                        <p class="text-sm">enrolar o tempo todo</p>
+                    </div>
+                </div>
+                
+                <div class="symptom-card card-hover">
+                    <img src="Preocupa_SandraNakkoud.jpg" alt="Preocupação">
+                    <div class="symptom-overlay">
+                        <h3 class="font-bold mb-1">PREOCUPAÇÃO</h3>
+                        <p class="text-sm">não tirar algo da cabeça</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-xl text-gray-700 mt-12 max-w-4xl mx-auto">
+                ...aperto no peito, angústia e choro, taquicardia e falta de ar, insônia, entre outros!
+            </p>
+            
+            <p class="text-2xl text-gray-900 mt-8 max-w-4xl mx-auto leading-relaxed font-medium">
+                Por muitos anos, tenho me dedicado a casos de ansiedade, e posso ajudar você a <strong class="gold-text">identificar e ressignificar as raízes emocionais</strong> que te trouxeram até esse ciclo de medo, através do meu próprio método de sessão individual totalmente online.
+            </p>
+        </div>
+    </section>
+
+    <!-- Protocolo V.I.D.A -->
+    <section id="metodo" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-lg font-semibold gold-text mb-4 uppercase tracking-wider">IMPLEMENTANDO O PROTOCOLO VIDA</p>
+                <h2 class="serif text-3xl md:text-5xl font-bold mb-6 text-black">
+                    Entenda o Protocolo <span class="gold-text">V.I.D.A</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Através de anos de atendimento e estudos do comportamento criamos o <strong>MÉTODO SUPLENO</strong>
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="step-box">
+                    <div class="step-letter serif">V</div>
+                    <h3 class="text-2xl font-bold mb-3 text-black text-center mt-4">Vínculo</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Vamos conversar sobre seu cotidiano e entender quais os principais desafios e receios vem te incomodando, além descobrir quais os sintomas que atrapalham sua vida.
+                    </p>
+                </div>
+                
+                <div class="step-box">
+                    <div class="step-letter serif">I</div>
+                    <h3 class="text-2xl font-bold mb-3 text-black text-center mt-4">Instrução</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Nessa etapa traremos novos referenciais de mundo rever significados que removerão você dessa prisão emocional que te incomodam e trazer um novo significado para sua vida.
+                    </p>
+                </div>
+                
+                <div class="step-box">
+                    <div class="step-letter serif">D</div>
+                    <h3 class="text-2xl font-bold mb-3 text-black text-center mt-4">Dissolução</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Nesse momento serei um guia para usar técnicas científicas que irão tratar os principais sintomas que te atrapalham e através do Método Supleno dar novos rumos para sua vida.
+                    </p>
+                </div>
+                
+                <div class="step-box">
+                    <div class="step-letter serif">A</div>
+                    <h3 class="text-2xl font-bold mb-3 text-black text-center mt-4">Avaliação</h3>
+                    <p class="text-gray-700 leading-relaxed text-center">
+                        Iremos planejar novas metas e ações que irão trazer de forma definitiva mudanças para soltar das amarras que te prendem e elaborar um plano de tratamento para você ter uma nova vida.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Oferta -->
+    <section id="agendar" class="py-20 px-6 black-bg">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="serif text-3xl md:text-5xl font-bold mb-4 text-white">
+                    Sessão Apontamento <span class="gold-text">Premium</span>
+                </h2>
+                <p class="text-xl gold-text">
+                    Investigação + Hipnoterapia + Plano de Orientação
+                </p>
+            </div>
+            
+            <div class="bg-white rounded-3xl p-10 md:p-16 border-4 border-[#D4AF37]">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-black">O que está incluso:</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle gold-text text-xl mt-1"></i>
+                                <span class="text-gray-700"><strong>45 Minutos</strong> de sessão completa</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle gold-text text-xl mt-1"></i>
+                                <span class="text-gray-700"><strong>Sigilo Absoluto</strong> garantido</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle gold-text text-xl mt-1"></i>
+                                <span class="text-gray-700"><strong>Zero Julgamentos</strong> - ambiente seguro</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle gold-text text-xl mt-1"></i>
+                                <span class="text-gray-700"><strong>Somente eu e você</strong> - exclusivo</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle gold-text text-xl mt-1"></i>
+                                <span class="text-gray-700"><strong>Por Chamada de Vídeo</strong> - online</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle gold-text text-xl mt-1"></i>
+                                <span class="text-gray-700"><strong>Sem Precisar sair de Casa</strong></span>
+                            </li>
+                        </ul>
+                        
+                        <div class="mt-8 bg-gray-100 border-2 border-[#D4AF37] rounded-xl p-4">
+                            <p class="text-black font-semibold text-center flex items-center justify-center gap-3">
+                                <img src="diamond-icon.png" alt="Diamante" class="w-6 h-6">
+                                Resultados desde a primeira sessão!
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col justify-center items-center">
+                        <div class="text-center mb-8">
+                            <p class="text-gray-600 text-lg mb-2">De:</p>
+                            <p class="text-3xl font-bold text-gray-400 price-old">R$ 350,00</p>
+                            <p class="text-gray-600 text-lg mb-4 mt-4">Por apenas:</p>
+                            <p class="serif text-7xl font-extrabold gold-text mb-2">R$ 147</p>
+                            <p class="text-gray-600">pagamento único</p>
+                        </div>
+                        
+                        <a href="https://wa.me/5527981125528?text=Olá!%20Quero%20agendar%20minha%20sessão%20premium!" 
+                           target="_blank"
+                           class="gold-bg text-black px-12 py-5 rounded-full font-bold text-xl hover:opacity-90 transition shine-animation inline-flex items-center justify-center gap-3 w-full">
+                            <i class="fab fa-whatsapp text-2xl"></i>
+                            Agendar Agora
+                        </a>
+                        
+                        <p class="text-gray-600 text-sm mt-6 text-center">
+                            Vagas limitadas • Atendimento online • Pagamento seguro
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Sandra -->
+    <section id="sobre" class="py-20 px-6 black-bg">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="serif text-3xl md:text-5xl font-bold mb-4 text-white">
+                    Quem irá te atender?
+                </h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="flex justify-center">
+                    <img src="sandra-logo.jpg" alt="Sandra Nakkoud" class="rounded-2xl shadow-2xl w-full max-w-[500px]">
+                </div>
+                
+                <div>
+                    <div class="space-y-4 text-gray-300 leading-relaxed text-lg">
+                        <p>
+                            Sandra Nakkoud é <strong class="text-white">Psicoterapeuta especialista em Hipnoterapia avançada</strong> para o alívio e controle da ansiedade.
+                        </p>
+                        <p>
+                            Com mais de <strong class="gold-text">5 mil horas de atendimento clínico</strong>, é a única terapeuta no Brasil que dedica 100% da sua agenda de atendimentos para ajudar mulheres com transtorno de ansiedade.
+                        </p>
+                        <p>
+                            São dezenas de depoimentos de pessoas que aprenderam a dominar a ansiedade e tiveram suas vidas transformadas pela Hipnoterapia.
+                        </p>
+                        <p>
+                            Sandra busca sempre se manter atualizada para oferecer um atendimento de ponta, fez estudos com diversas autoridades da hipnoterapia no Brasil, e no Mundo Como <strong class="text-white">Robert Dilts, Roxanna Erickson, Tereza Robles, Gastão Ribeiro, Sofia Bauer</strong>.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8 bg-white/5 text-white p-6 rounded-lg border-l-4 border-[#D4AF37]">
+                        <p class="italic text-lg serif">
+                            "Tenho dedicado a minha vida para ajudar pessoas a <span class="gold-text font-semibold">superar a ansiedade</span> sem o uso de medicamentos e <span class="gold-text font-semibold">remover bloqueios mentais e emocionais</span> que te impedem de ter uma vida plena!"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section id="depoimentos" class="py-20 px-6 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="serif text-3xl md:text-5xl font-bold mb-4 text-black">
+                    Depoimentos de <span class="gold-text">Clientes</span>
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Veja o que quem já foi atendida tem a dizer
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="testimonial-card card-hover">
+                    <img src="depoimento1.png" alt="Juliana de Sá" class="testimonial-img">
+                    <div class="flex justify-center gap-1 mb-4">
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed italic">
+                        "A Sandra me auxiliou a eliminar o peso que adquiri por comer por ansiedade. Ela sempre inova, com técnicas incríveis, e um tratamento humanizado, a compulsão foi controlada, e não voltou mais."
+                    </p>
+                    <p class="font-bold text-black">Juliana de Sá</p>
+                    <p class="text-sm gold-text">Dentista</p>
+                </div>
+                
+                <div class="testimonial-card card-hover">
+                    <img src="depoimento2.png" alt="Tânia Reis" class="testimonial-img">
+                    <div class="flex justify-center gap-1 mb-4">
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed italic">
+                        "Tive uma experiência incrível com a Sandra, ela utilizou várias técnicas terapêuticas, e realmente eu me libertei da compulsão que tinha por pão francês que eu comia por ansiedade. Hoje estou mais tranquila."
+                    </p>
+                    <p class="font-bold text-black">Tânia Reis</p>
+                    <p class="text-sm gold-text">Administradora</p>
+                </div>
+                
+                <div class="testimonial-card card-hover">
+                    <img src="depoimento3.png" alt="Jaqueline Fileti" class="testimonial-img">
+                    <div class="flex justify-center gap-1 mb-4">
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                        <i class="fas fa-star gold-text"></i>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed italic">
+                        "Foi muito bom ter participado da terapia com a Sandra, fazendo hipnose superei a compulsão que eu tinha por chocolate em barra. Agora consigo fazer escolhas, não me sinto mais refém ansiedade e sem alternativas."
+                    </p>
+                    <p class="font-bold text-black">Jaqueline Fileti</p>
+                    <p class="text-sm gold-text">Professora</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Método Completo -->
+    <section class="py-20 px-6 black-bg">
+        <div class="max-w-6xl mx-auto text-center text-white">
+            <h2 class="serif text-3xl md:text-5xl font-bold mb-12">
+                Um Método Completo e Eficiente
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-[#D4AF37]">
+                    <i class="fas fa-chart-line text-6xl gold-text mb-4"></i>
+                    <p class="text-3xl font-bold mb-2 gold-text">90%</p>
+                    <p class="text-gray-300">de eficácia de recuperação</p>
+                </div>
+                
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-[#D4AF37]">
+                    <i class="fas fa-bolt text-6xl gold-text mb-4"></i>
+                    <p class="text-3xl font-bold mb-2 gold-text">Resultados Rápidos</p>
+                    <p class="text-gray-300">Desde a primeira sessão</p>
+                </div>
+                
+                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-[#D4AF37]">
+                    <i class="fas fa-leaf text-6xl gold-text mb-4"></i>
+                    <p class="text-3xl font-bold mb-2 gold-text">100% Natural</p>
+                    <p class="text-gray-300">Completamente sem medicamentos</p>
+                </div>
+            </div>
+            
+            <div class="mt-12">
+                <a href="#agendar" class="gold-bg text-black px-12 py-5 rounded-full font-bold text-xl hover:opacity-90 transition shine-animation inline-flex items-center justify-center gap-3">
+                    Quero Começar Agora
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 px-6 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="serif text-3xl md:text-5xl font-bold mb-4 text-black">
+                    Dúvidas <span class="gold-text">Frequentes</span>
+                </h2>
+            </div>
+            
+            <div class="space-y-2">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Como posso saber se tenho ansiedade?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>A ansiedade é uma sensação normal em nosso cotidiano, mas se você tiver preocupações excessivas, sentir-se nervosa, evitando situações, tendo ataques de pânico e sintomas físicos como sudorese, tremores e palpitações, cansaço, medo, irritação, pode ser sinal de ansiedade crônica.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Tudo vai ficar resolvido em só um atendimento?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Cada caso é único e a quantidade de sessões necessárias varia de pessoa para pessoa. No entanto, o Protocolo V.I.D.A foi projetado para tratar os principais sintomas da ansiedade em um único atendimento.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>O resultado online é igual o presencial?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sim, a eficácia do tratamento online é comprovada e você terá a mesma qualidade de atendimento que teria presencialmente.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Terapeuta pode passar remédios?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Não, como psicoterapeuta, Sandra Nakkoud não tem autorização para prescrever medicamentos. O foco do tratamento é baseado em Técnicas seguras de Psicoterapia e Hipnoterapia além de outras técnicas terapêuticas.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Já fui no psicólogo, porque preciso de terapia?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Sandra Nakkoud é especializada em modelos avançados para o alívio e controle da ansiedade. Como é criadora do MÉTODO SUPLENO de consciência emocional, portanto possui ferramentas únicas para trabalhar suas principais questões. Se você já tentou outras formas de terapia e não obteve sucesso, este sem sobra de dúvidas é o método certo para você.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Na primeira sessão tenho resultados?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>O Protocolo V.I.D.A foi projetado para tratar os principais sintomas da ansiedade em um único atendimento. Muitos clientes relatam melhorias significativas dos sintomas já na primeira sessão, mas é importante lembrar que cada caso é único.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        <span>Você atende crianças?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Apesar da Sandra Nakkoud dedicar 100% da sua agenda para ajudar mulheres com transtorno de ansiedade, sabemos que muitas mães estão sofrendo com seus filhos em crises de ansiedade. Portanto dependendo do caso posso avaliar a possibilidade de fazer o atendimento para crianças. Entre em contato antes de agendar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-20 px-6 black-bg">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h2 class="serif text-3xl md:text-5xl font-bold mb-6">
+                Ainda tem dúvidas?
+            </h2>
+            <p class="text-xl mb-10 text-gray-300">
+                Se ainda estiver insegura de marcar seu atendimento, ou se ainda tiver alguma dúvida sobre o processo, você pode conversar com alguém da minha equipe pelo WhatsApp.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/5527981125528?text=Olá!%20Tenho%20dúvidas%20sobre%20o%20atendimento" 
+                   target="_blank"
+                   class="border-2 border-[#D4AF37] text-[#D4AF37] px-10 py-5 rounded-full font-bold text-lg hover:bg-[#D4AF37]/10 transition inline-flex items-center justify-center gap-3">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                    Falar com Suporte
+                </a>
+                <a href="#agendar" class="gold-bg text-black px-10 py-5 rounded-full font-bold text-lg hover:opacity-90 transition inline-flex items-center justify-center gap-3">
+                    Agendar Minha Sessão
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#1a1a1a] text-white py-12 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h3 class="serif text-3xl font-bold gold-text mb-4">Sandra Nakkoud</h3>
+            <p class="text-gray-400 mb-6">
+                Terapeuta Especialista em Ansiedade • Vila Velha, ES
+            </p>
+            
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="https://instagram.com/sandranakkoud" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition text-2xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://facebook.com/sandranakkoud" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition text-2xl">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://youtube.com/@sandranakkoud" target="_blank" class="text-gray-400 hover:text-[#D4AF37] transition text-2xl">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+            
+            <p class="text-gray-500 text-sm">© 2026 - Todos os direitos reservados</p>
+            <p class="text-gray-400 text-xs mt-2">Site desenvolvido pela <a href="https://sucesso.net.br" target="_blank" class="text-white hover:text-purple-400 transition">Agência do Sucesso Empresarial</a></p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/5527981125528?text=Olá!%20Vim%20pelo%20site" 
+       target="_blank"
+       class="fixed bottom-6 right-6 bg-[#25D366] w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform z-50">
+        <i class="fab fa-whatsapp text-3xl text-white"></i>
+    </a>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Fecha todos
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Abre o clicado se estava fechado
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
